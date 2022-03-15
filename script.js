@@ -146,14 +146,17 @@ buttons.forEach((button) => {
 
     })
 })
-
+let gameComplete = false;
 window.addEventListener('click', () => {
+    if (gameComplete == false){
+
         if (computerScore >= 5){
             gameState.textContent = "COMPUTER WINS THE GAME";
             promptPlayer.textContent = "";
             userChoices.textContent = "";
             roundWinner.textContent = "";
-            container.removeChild(buttonContainer );
+            container.removeChild(buttonContainer);
+            gameComplete = true;
 
         } else if (playerScore >= 5){
             gameState.textContent = "PLAYER WINS THE GAME";
@@ -161,8 +164,9 @@ window.addEventListener('click', () => {
             userChoices.textContent = "";
             roundWinner.textContent = "";
             container.removeChild(buttonContainer);
+            gameComplete = true;
 
         }
-
+    }
 })
 
