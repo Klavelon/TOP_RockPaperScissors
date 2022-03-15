@@ -1,3 +1,59 @@
+let computerChoice;
+let playerChoice;
+
+
+const container = document.querySelector('#container');
+
+const title = document.createElement('h3');
+title.textContent = "Welcome to Rock Paper Scissors!";
+title.classList.add('heading');
+
+const promptPlayer = document.createElement('div');
+promptPlayer.classList.add('gameText');
+promptPlayer.textContent = "Please click a button below to begin playing!";
+
+const buttonContainer = document.createElement('div');
+buttonContainer.classList.add('buttonContainer');
+
+
+const userChoices = document.createElement('div');
+userChoices.classList.add('gameText');
+
+const roundWinner = document.createElement('div');
+roundWinner.classList.add('gameText');
+
+
+const gameState = document.createElement('div');
+gameState.classList.add('gameText');
+gameState.textContent = "Player Score, Computer Score, Rounds Played here";
+
+container.appendChild(title);
+container.appendChild(promptPlayer);
+container.appendChild(buttonContainer);
+container.appendChild(userChoices);
+container.appendChild(roundWinner);
+container.appendChild(gameState);
+
+const btnContainerChildren = document.querySelector('.buttonContainer');
+
+const rockButton = document.createElement('button');
+rockButton.classList.add('gameButton');
+rockButton.textContent = "Rock";
+
+const paperButton = document.createElement('button');
+paperButton.classList.add('gameButton');
+paperButton.textContent = "Paper";
+
+const scissorsButton = document.createElement('button');
+scissorsButton.classList.add('gameButton');
+scissorsButton.textContent =  "Scissors";
+
+btnContainerChildren.appendChild(rockButton);
+btnContainerChildren.appendChild(paperButton);
+btnContainerChildren.appendChild(scissorsButton);
+
+
+
 
 
 function ComputerPlay(){
@@ -6,115 +62,107 @@ function ComputerPlay(){
 }
 
 
-function playRound(){
+function playRound(pChoiceText){
+    computerChoice = ComputerPlay();
+    playerChoice = pChoiceText;
+    
+}
 
-let computerChoice = ComputerPlay();
-let playerChoice;
-playerChoice = prompt("Enter your choice of Rock, Paper or Scissors!");
-playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
-console.log("Computer plays " +computerChoice);
 
-function versus(){
+function versus() {
+
     if (playerChoice == "Rock"){
     
         if (computerChoice == "Scissors"){
-    
-            console.log("You Win!")
-            return "w";
+                return "w";
     
         } else if (computerChoice == "Paper"){
-    
-            console.log("You Lose!");
-            return "l";
+                return "l";
     
         } else if (computerChoice == "Rock"){
-    
-            console.log("TIE!");
-            return "t";
-        }
-    
-        else {
-    
-            console.log("Something went dreadfully wrong");
-    
+                return "t";
         }
     
     } else if (playerChoice == "Paper") {
     
         if (computerChoice == "Rock") {
-    
-            console.log("You Win!");
-            return "w";
+                return "w";
     
         } else if (computerChoice == "Paper"){
-    
-            console.log("TIE!");
-            return "t";
+                return "t";
     
         } else if (computerChoice == "Scissors"){
-    
-            console.log("You Lose!");
-            return "l";
-        }
-    
-        else {
-    
-            console.log("Something went dreadfully wrong");
-    
+                return "l";
         }
     
     } else if (playerChoice == "Scissors"){
     
         if (computerChoice == "Rock"){
-    
-            console.log("You Lose!");
-            return "l";
+                return "l";
     
         } else if (computerChoice == "Paper"){
-    
-            console.log("You Win!");
-            return "w";
+                return "w";
     
         } else if (computerChoice == "Scissors"){
-    
-            console.log("TIE!");
-            return "t";
-    
+                return "t";
         }
     
-        else {
-    
-            console.log("Something went dreadfully wrong");
-    
-        }
     }
-    }
-
-let score = versus();
-
-if (score === "w"){
-    playerScore++;
-} else if (score === "l"){
-    computerScore++;
-} else if (score === "t"){
-
-} else {console.log("What happened?"); }
-
-console.log("Player Score = " +playerScore);
-console.log("Computer Score = " +computerScore);
-}
+ }
 
 let computerScore = 0;
 let playerScore = 0;
+let roundNumber = 0;
 
-for (let i = 0; i < 5; i++) {
-    playRound();
- }
+function calculateResults(result) {
 
- if (playerScore > computerScore){
-     console.log("YOU ARE THE CHAMPION!");
- } else if (playerScore = computerScore){
-     console.log("OVERALL TIE!");
- } else {
-     console.log("YOU LOSE SIR. GOOD DAY.");
- }
+    if (result === "w"){
+        playerScore++;
+        roundNumber++;
+        return "You win this round!";
+    } else if (result === "l"){
+        computerScore++;
+        roundNumber++;
+        return "Computer wins this round!";
+    }
+    else if (result === "t"){
+        roundNumber++;
+        return "This round is a DRAW!";
+    }
+}
+
+
+
+
+const buttons = document.querySelectorAll('.gameButton');
+
+buttons.forEach((button) => {
+    button.addEventListener('click', function (e)  {
+        playRound(button.textContent);
+        userChoices.textContent = `Your: ${playerChoice} VS The Computer's ${computerChoice}`
+        let roundText = calculateResults(versus());
+        roundWinner.textContent = roundText;
+        gameState.textContent = `Your Score: ${playerScore} VS Computer Score: ${computerScore} - Round Number: ${roundNumber}`;
+
+    })
+})
+
+window.addEventListener('click', () => {
+        if (computerScore >= 5){
+            gameState.textContent = "COMPUTER WINS THE GAME";
+            promptPlayer.textContent = "";
+            userChoices.textContent = "";
+            roundWinner.textContent = "";
+            container.removeChild(buttonContainer );
+
+        } else if (playerScore >= 5){
+            gameState.textContent = "PLAYER WINS THE GAME";
+            promptPlayer.textContent = "";
+            userChoices.textContent = "";
+            roundWinner.textContent = "";
+            container.removeChild(buttonContainer);
+
+        }
+
+})
+

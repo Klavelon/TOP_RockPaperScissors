@@ -1,0 +1,30 @@
+
+#container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.heading{
+    font-family: 'Calibri';
+    font-size: 80px;
+}
+
+.gameText{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 24px;
+}
+
+button {
+    height: 60px;
+    width: 60px;
+    margin-left: 12px;
+    margin-right: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.buttonContainer {
+    display: flex;
+}
